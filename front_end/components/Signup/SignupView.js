@@ -3,7 +3,7 @@ import React from "react";
 function SignupView() {
   return (
     <div className="container-fluid">
-      <div className="container">
+      <div className="container my-5">
         <div className="card animate__animated animate__fadeInRight w-50 p-5 mx-auto shadow rounded">
           <div className="card-body">
             <h5 className="card-title fw-bold">Sign up for free</h5>

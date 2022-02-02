@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import classNames from "classnames";
+import { useSelector } from "react-redux";
 
 function Navbar() {
   const [hoverLink, setHoverLink] = useState(0);
   const [hoverLogo, setHoverLogo] = useState(false);
+  const visible = useSelector((state) => state.visible);
 
   useEffect(() => {
     // cleanup
@@ -15,7 +17,10 @@ function Navbar() {
   }, []);
 
   return (
-    <div className="container-fluid px-0 shadow-sm animate__animated animate__fadeInDown">
+    <div
+      className="container-fluid px-0 shadow-sm animate__animated animate__fadeInDown"
+      hidden={visible.isNavbarHidden}
+    >
       <div className="container">
         <header className="d-flex flex-wrap justify-content-center py-3 mb-4">
           <Link href="/">

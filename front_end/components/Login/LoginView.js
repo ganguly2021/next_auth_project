@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import TextFieldInput from "./../common/TextFieldInput";
 
 function LoginView(props) {
@@ -6,10 +7,12 @@ function LoginView(props) {
 
   return (
     <div className="container-fluid">
-      <div className="container">
+      <div className="container my-5">
         <div className="card animate__animated animate__fadeInLeft w-50 p-5 mx-auto shadow rounded">
           <div className="card-body">
-            <h5 className="card-title fw-bold mb-3">Already have an account ?</h5>
+            <h5 className="card-title fw-bold mb-3">
+              Already have an account ?
+            </h5>
             <form onSubmit={handleSubmit} autoComplete="off" noValidate>
               <TextFieldInput
                 type="email"
@@ -39,7 +42,10 @@ function LoginView(props) {
                 Login
               </button>
               <small className="text-muted">
-                By clicking Sign up, you agree to the terms of use.
+                Don't have an account ?{" "}
+                <Link href="/signup">
+                  <a className="text-danger">Signup here.</a>
+                </Link>
               </small>
             </form>
           </div>
