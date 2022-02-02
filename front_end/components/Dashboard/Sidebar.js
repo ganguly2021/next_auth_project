@@ -1,20 +1,27 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import classnames from "classnames";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 function Sidebar() {
   const [hoverLink, setHoverLink] = useState(0);
 
-
-  useEffect(() => {
-
-  }, [])
-
+  useEffect(() => {}, []);
 
   // handle user signout
   const handleSignout = () => {
-    console.log("User signout.")
-  }
+    console.log("User signout.");
+    toast.warn("Add signout functionality.", {
+      position: "top-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
 
   return (
     <div
@@ -34,7 +41,7 @@ function Sidebar() {
             <a
               className={classnames("nav-link text-white", {
                 active: hoverLink === 1,
-                'fw-bold': hoverLink === 1,
+                "fw-bold": hoverLink === 1,
               })}
               onMouseOut={() => setHoverLink(0)}
               onMouseOver={() => setHoverLink(1)}
@@ -49,7 +56,7 @@ function Sidebar() {
             <a
               className={classnames("nav-link text-white", {
                 active: hoverLink === 2,
-                'fw-bold': hoverLink === 2,
+                "fw-bold": hoverLink === 2,
               })}
               onMouseOut={() => setHoverLink(0)}
               onMouseOver={() => setHoverLink(2)}
@@ -60,18 +67,18 @@ function Sidebar() {
           </Link>
         </li>
         <li>
-            <button
-              className={classnames("btn text-start w-100 nav-link text-white", {
-                active: hoverLink === 3,
-                'fw-bold': hoverLink === 3,
-              })}
-              onMouseOut={() => setHoverLink(0)}
-              onMouseOver={() => setHoverLink(3)}
-              onClick={handleSignout}
-            >
-              <i className="fas fa-sign-out-alt fa-1x"></i>
-              <span className="fs-6 ms-3">Sign out</span>
-            </button>
+          <button
+            className={classnames("btn text-start w-100 nav-link text-white", {
+              active: hoverLink === 3,
+              "fw-bold": hoverLink === 3,
+            })}
+            onMouseOut={() => setHoverLink(0)}
+            onMouseOver={() => setHoverLink(3)}
+            onClick={handleSignout}
+          >
+            <i className="fas fa-sign-out-alt fa-1x"></i>
+            <span className="fs-6 ms-3">Sign out</span>
+          </button>
         </li>
       </ul>
       <hr />
@@ -92,9 +99,7 @@ function Sidebar() {
           />
           <strong>Donkey</strong>
         </a>
-        <ul
-          className="dropdown-menu dropdown-menu-dark text-small shadow"
-        >
+        <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
           <li>
             <a className="dropdown-item" href="#">
               New project...

@@ -4,6 +4,7 @@ import "../styles/globals.css";
 
 import store from "./../front_end/redux/store";
 import { Provider } from "react-redux";
+import { ToastContainer } from "react-toastify";
 
 import Footer from "./../front_end/components/Layout/Footer";
 import Navbar from "./../front_end/components/Layout/Navbar";
@@ -41,6 +42,7 @@ function MyApp({ Component, pageProps }) {
       <Provider store={store}>
         <Navbar />
         <Component {...pageProps} />
+        <ToastContainer />
         <Footer />
       </Provider>
       <footer>
