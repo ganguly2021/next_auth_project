@@ -15,7 +15,7 @@ function Navbar() {
   }, []);
 
   return (
-    <div className="container-fluid px-0 shadow-sm">
+    <div className="container-fluid px-0 shadow-sm animate__animated animate__fadeInDown">
       <div className="container">
         <header className="d-flex flex-wrap justify-content-center py-3 mb-4">
           <Link href="/">

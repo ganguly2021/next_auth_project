@@ -13,7 +13,7 @@ function Footer() {
   }, []);
 
   return (
-    <footer className="py-5">
+    <footer className="py-5 animate__animated animate__fadeInUp">
       <ul className="nav justify-content-center border-bottom pb-3 mb-3">
         <li className="nav-item">
           <Link href="/">

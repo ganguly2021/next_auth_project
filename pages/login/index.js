@@ -1,7 +1,11 @@
-import React from 'react';
+import React from "react";
+import Login from "./../../front_end/components/Login/Login";
 
 function LoginPage() {
-  return <div>Login Page</div>;
+
+  return (
+    <Login />
+  );
 }
 
 export default LoginPage;
