@@ -1,33 +1,51 @@
 import React from "react";
+import TextFieldInput from "../common/TextFieldInput";
 
-function SignupView() {
+function SignupView(props) {
+  const { email, password, password2, handleChange, handleSubmit, error } =
+    props;
   return (
     <div className="container-fluid">
       <div className="container my-5">
         <div className="card animate__animated animate__fadeInRight w-50 p-5 mx-auto shadow rounded">
           <div className="card-body">
-            <h5 className="card-title fw-bold">Sign up for free</h5>
-            <form className="">
-              <div className="form-floating mb-3">
-                <input
-                  type="email"
-                  className="form-control rounded-4"
-                  id="floatingInput"
-                  placeholder="name@example.com"
-                />
-                <label htmlFor="floatingInput">Email address</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  type="password"
-                  className="form-control rounded-4"
-                  id="floatingPassword"
-                  placeholder="Password"
-                />
-                <label htmlFor="floatingPassword">Password</label>
-              </div>
+            <h5 className="card-title fw-bold mb-3">Sign up for free</h5>
+            <form onSubmit={handleSubmit} autoComplete="off" noValidate>
+              <TextFieldInput
+                type="email"
+                id="email"
+                name="email"
+                placeholder="abc@abc.com"
+                lblText="Email address"
+                infoText="We never share your email with anyone."
+                onChange={handleChange}
+                value={email}
+                error={error.email}
+              />
+              <TextFieldInput
+                type="password"
+                id="password"
+                name="password"
+                placeholder="******"
+                lblText="Password"
+                onChange={handleChange}
+                value={password}
+                error={error.password}
+              />
+              <TextFieldInput
+                type="password"
+                id="password2"
+                name="password2"
+                placeholder="******"
+                lblText="Re-type password"
+                infoText="Re-type password must match the above password."
+                onChange={handleChange}
+                value={password2}
+                error={error.password2}
+              />
+
               <button
-                className="w-100 mb-2 btn btn-lg rounded-4 btn-primary"
+                className="w-100 mb-2 btn btn-lg rounded-4 btn-outline-primary"
                 type="submit"
               >
                 Sign up
