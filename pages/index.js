@@ -1,11 +1,6 @@
-import React from 'react'
+import React from "react";
+import Home from "./../front_end/components/Layout/Home";
 
-export default function Home() {
-  return (
-    <div className='container-fluid'>
-      <div className='container my-5 py-5'>
-        <h1>Hello World</h1>
-      </div>
-    </div>
-  )
+export default function HomePage() {
+  return <Home />;
 }
