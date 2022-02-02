@@ -12,7 +12,7 @@ function Dashboard({ children }) {
   const [isMounted, setMounted] = useState(false);
 
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     // set mounted to true
     setMounted(true);

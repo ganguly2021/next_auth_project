@@ -3,15 +3,25 @@ import Link from "next/link";
 import classnames from "classnames";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
+import { stopSidebarAnimate } from "./../../redux/reducers/visible";
 
 function Sidebar() {
   const [hoverLink, setHoverLink] = useState(0);
 
-  useEffect(() => {}, []);
+  const visible = useSelector((state) => state.visible);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // cleanup
+    return () => {
+      // disable dashboard animate
+      dispatch(stopSidebarAnimate());
+    };
+  }, []);
 
   // handle user signout
   const handleSignout = () => {
-    console.log("User signout.");
     toast.warn("Add signout functionality.", {
       position: "top-right",
       autoClose: 2500,
@@ -25,7 +35,13 @@ function Sidebar() {
 
   return (
     <div
-      className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark animate__animated animate__fadeInLeft shadow"
+      className={classnames(
+        "d-flex flex-column flex-shrink-0 p-3 text-white bg-dark shadow",
+        {
+          animate__animated: visible.animateSidebar,
+          animate__fadeInLeft: visible.animateSidebar,
+        }
+      )}
       style={{ width: "280px", height: "100vh" }}
     >
       <Link href="/dashboard">
@@ -52,7 +68,7 @@ function Sidebar() {
           </Link>
         </li>
         <li>
-          <Link href="/">
+          <Link href="/profile/edit">
             <a
               className={classnames("nav-link text-white", {
                 active: hoverLink === 2,

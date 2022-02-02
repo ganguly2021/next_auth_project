@@ -5,6 +5,7 @@ export const visibleSlice = createSlice({
   initialState: {
     isNavbarHidden: false,
     isFooterHidden: false,
+    animateSidebar: true,
   },
   reducers: {
     hideNavbar: (state) => {
@@ -19,11 +20,14 @@ export const visibleSlice = createSlice({
     showFooter: (state) => {
       state.isFooterHidden = false;
     },
+    stopSidebarAnimate: (state) => {
+      state.animateSidebar = false
+    }
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { hideNavbar, showNavbar, hideFooter, showFooter } =
+export const { hideNavbar, showNavbar, hideFooter, showFooter, stopSidebarAnimate } =
   visibleSlice.actions;
 
 export default visibleSlice.reducer;
