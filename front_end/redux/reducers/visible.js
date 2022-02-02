@@ -1,21 +1,29 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 export const visibleSlice = createSlice({
-  name: 'visible',
+  name: "visible",
   initialState: {
-    isNavbarHidden: false
+    isNavbarHidden: false,
+    isFooterHidden: false,
   },
   reducers: {
     hideNavbar: (state) => {
-      state.isNavbarHidden = true
+      state.isNavbarHidden = true;
     },
     showNavbar: (state) => {
-      state.isNavbarHidden = false
-    }
+      state.isNavbarHidden = false;
+    },
+    hideFooter: (state) => {
+      state.isFooterHidden = true;
+    },
+    showFooter: (state) => {
+      state.isFooterHidden = false;
+    },
   },
-})
+});
 
 // Action creators are generated for each case reducer function
-export const { hideNavbar, showNavbar } = visibleSlice.actions
+export const { hideNavbar, showNavbar, hideFooter, showFooter } =
+  visibleSlice.actions;
 
-export default visibleSlice.reducer
+export default visibleSlice.reducer;

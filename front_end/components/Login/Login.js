@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 import { hideNavbar, showNavbar } from "./../../redux/reducers/visible";
 import { loginSchema } from "./../../../validation/schema/auth";
 import { getFormattedError, isEmptyObject } from "./../../../validation/helper";
@@ -13,6 +14,8 @@ function Login() {
   const [error, setError] = useState({});
 
   const dispatch = useDispatch();
+
+  const router = useRouter();
 
   useEffect(() => {
     // set mounted to true
@@ -62,6 +65,9 @@ function Login() {
     }
     // clean errors
     setError({});
+
+    // redirect to dashboard
+    router.push("/dashboard");
   };
 
   return (

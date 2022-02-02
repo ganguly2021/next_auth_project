@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import className from "classnames";
+import { useSelector } from "react-redux";
 
 function Footer() {
   const [hoverLink, setHoverLink] = useState(0);
+
+  const visible = useSelector((state) => state.visible);
 
   useEffect(() => {
     // cleanup
@@ -13,7 +16,10 @@ function Footer() {
   }, []);
 
   return (
-    <footer className="py-5 animate__animated animate__fadeInUp">
+    <footer
+      className="py-5 animate__animated animate__fadeInUp"
+      hidden={visible.isFooterHidden}
+    >
       <ul className="nav justify-content-center border-bottom pb-3 mb-3">
         <li className="nav-item">
           <Link href="/">
