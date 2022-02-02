@@ -1,48 +1,77 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import classnames from "classnames";
 
 function Sidebar() {
+  const [hoverLink, setHoverLink] = useState(0);
+
+
+  useEffect(() => {
+
+  }, [])
+
+
+  // handle user signout
+  const handleSignout = () => {
+    console.log("User signout.")
+  }
+
   return (
     <div
       className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark animate__animated animate__fadeInLeft shadow"
       style={{ width: "280px", height: "100vh" }}
     >
-      <a
-        href="/"
-        className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-      >
-        <span className="fs-4">Welcome, username</span>
-      </a>
+      <Link href="/dashboard">
+        <a className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+          <i className="fas fa-user-shield fa-2x text-warning"></i>
+          <span className="fs-4 ms-3">Sandeep</span>
+        </a>
+      </Link>
       <hr />
       <ul className="nav nav-pills flex-column mb-auto">
         <li className="nav-item">
-          <a href="#" className="nav-link active" aria-current="page">
-            <svg className="bi me-2" width="16" height="16"></svg>
-            Home
-          </a>
+          <Link href="/">
+            <a
+              className={classnames("nav-link text-white", {
+                active: hoverLink === 1,
+                'fw-bold': hoverLink === 1,
+              })}
+              onMouseOut={() => setHoverLink(0)}
+              onMouseOver={() => setHoverLink(1)}
+            >
+              <i className="fas fa-home fa-1x"></i>
+              <span className="fs-6 ms-3">Home</span>
+            </a>
+          </Link>
         </li>
         <li>
-          <a href="#" className="nav-link text-white">
-            <svg className="bi me-2" width="16" height="16"></svg>
-            Dashboard
-          </a>
+          <Link href="/">
+            <a
+              className={classnames("nav-link text-white", {
+                active: hoverLink === 2,
+                'fw-bold': hoverLink === 2,
+              })}
+              onMouseOut={() => setHoverLink(0)}
+              onMouseOver={() => setHoverLink(2)}
+            >
+              <i className="fas fa-user-edit fa-1x"></i>
+              <span className="fs-6 ms-3">Edit Profile</span>
+            </a>
+          </Link>
         </li>
         <li>
-          <a href="#" className="nav-link text-white">
-            <svg className="bi me-2" width="16" height="16"></svg>
-            Orders
-          </a>
-        </li>
-        <li>
-          <a href="#" className="nav-link text-white">
-            <svg className="bi me-2" width="16" height="16"></svg>
-            Products
-          </a>
-        </li>
-        <li>
-          <a href="#" className="nav-link text-white">
-            <svg className="bi me-2" width="16" height="16"></svg>
-            Customers
-          </a>
+            <button
+              className={classnames("btn text-start w-100 nav-link text-white", {
+                active: hoverLink === 3,
+                'fw-bold': hoverLink === 3,
+              })}
+              onMouseOut={() => setHoverLink(0)}
+              onMouseOver={() => setHoverLink(3)}
+              onClick={handleSignout}
+            >
+              <i className="fas fa-sign-out-alt fa-1x"></i>
+              <span className="fs-6 ms-3">Sign out</span>
+            </button>
         </li>
       </ul>
       <hr />
@@ -50,22 +79,21 @@ function Sidebar() {
         <a
           href="#"
           className="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-          id="dropdownUser1"
+          id="user_dropdown"
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
           <img
-            src="https://github.com/mdo.png"
+            src="/images/donkey_user.jpg"
             alt=""
             className="rounded-circle me-2"
-            width="32"
-            height="32"
+            width={32}
+            height={32}
           />
-          <strong>mdo</strong>
+          <strong>Donkey</strong>
         </a>
         <ul
           className="dropdown-menu dropdown-menu-dark text-small shadow"
-          aria-labelledby="dropdownUser1"
         >
           <li>
             <a className="dropdown-item" href="#">
