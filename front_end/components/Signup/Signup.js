@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { hideNavbar, showNavbar } from "./../../redux/reducers/visible";
+import { signupSchema } from "./../../../validation/schema/auth";
+import { getFormattedError, isEmptyObject } from "./../../../validation/helper";
 import SignupView from "./SignupView";
 
 function Signup() {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
@@ -38,11 +41,34 @@ function Signup() {
       setPassword(value);
     } else if (name === "password2") {
       setPassword2(value);
+    } else if (name === "username") {
+      setUsername(value);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // create form data object
+    const formData = {
+      username: username,
+      email: email,
+      password: password,
+      password2: password2,
+    };
+
+    // validate form data
+    const { error, value } = signupSchema.validate(formData, {
+      abortEarly: false,
+    });
+
+    if (!isEmptyObject(error)) {
+      // set errors
+      setError(getFormattedError(error));
+      return;
+    }
+    // clean errors
+    setError({});
 
     console.log("email: " + email);
     console.log("password: " + password);
@@ -51,6 +77,7 @@ function Signup() {
 
   return (
     <SignupView
+      username={username}
       email={email}
       password={password}
       handleChange={handleChange}

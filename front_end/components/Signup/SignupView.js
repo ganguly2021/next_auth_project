@@ -2,7 +2,7 @@ import React from "react";
 import TextFieldInput from "../common/TextFieldInput";
 
 function SignupView(props) {
-  const { email, password, password2, handleChange, handleSubmit, error } =
+  const { username, email, password, password2, handleChange, handleSubmit, error } =
     props;
   return (
     <div className="container-fluid">
@@ -11,6 +11,17 @@ function SignupView(props) {
           <div className="card-body">
             <h5 className="card-title fw-bold mb-3">Sign up for free</h5>
             <form onSubmit={handleSubmit} autoComplete="off" noValidate>
+            <TextFieldInput
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Sandeep Ganguly"
+                lblText="Username"
+                infoText="Username don't need to be unique."
+                onChange={handleChange}
+                value={username}
+                error={error.username}
+              />
               <TextFieldInput
                 type="email"
                 id="email"

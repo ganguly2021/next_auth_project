@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { hideNavbar, showNavbar } from "./../../redux/reducers/visible";
+import { loginSchema } from "./../../../validation/schema/auth";
+import { getFormattedError, isEmptyObject } from "./../../../validation/helper";
+
 import LoginView from "./LoginView";
 
 function Login() {
@@ -41,8 +44,24 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log("email: " + email);
-    console.log("password: " + password);
+    // create form data object
+    const formData = {
+      email: email,
+      password: password,
+    };
+
+    // validate form data
+    const { error, value } = loginSchema.validate(formData, {
+      abortEarly: false,
+    });
+
+    if (!isEmptyObject(error)) {
+      // set errors
+      setError(getFormattedError(error));
+      return;
+    }
+    // clean errors
+    setError({});
   };
 
   return (
