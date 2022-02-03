@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { signIn } from "next-auth/react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { hideNavbar, showNavbar } from "./../../redux/reducers/visible";
 import { loginSchema } from "./../../../validation/schema/auth";
 import { getFormattedError, isEmptyObject } from "./../../../validation/helper";
+import { useSnackbar } from "notistack";
 
 import LoginView from "./LoginView";
 
 function Login() {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isMounted, setMounted] = useState(false);
-  const [error, setError] = useState({});
+  const [formError, setFormError] = useState({});
 
   const dispatch = useDispatch();
 
@@ -44,7 +47,7 @@ function Login() {
     }
   };
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     // create form data object
@@ -60,15 +63,39 @@ function Login() {
 
     if (!isEmptyObject(error)) {
       // set errors
-      setError(getFormattedError(error));
+      setFormError(getFormattedError(error));
       return;
     }
+
     // clean errors
-    setError({});
+    setFormError({});
+
+    // signin user using Next-Auth
+    const result = await signIn("credentials", {
+      redirect: false,
+      email: email,
+      password: password,
+    });
+
+    // if NextAuth providers has error
+    if (result.error !== null) {
+      const temp = JSON.parse(result.error);
+      const err = temp.error;
+
+      // set error
+      setFormError({ ...err });
+      return;
+    }
+
+    // clean errors
+    setFormError({});
+
+    // show login success message
+    enqueueSnackbar("User loggedin.", { variant: "success", autoHideDuration: 1500 });
 
     // redirect to dashboard
     router.push("/dashboard");
-  };
+  }
 
   return (
     <LoginView
@@ -76,7 +103,7 @@ function Login() {
       password={password}
       handleChange={handleChange}
       handleSubmit={handleSubmit}
-      error={error}
+      error={formError}
     />
   );
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 import { hideNavbar, showNavbar } from "./../../redux/reducers/visible";
 import { signupSchema } from "./../../../validation/schema/auth";
 import { getFormattedError, isEmptyObject } from "./../../../validation/helper";
@@ -32,6 +33,7 @@ function Signup() {
   const [error, setError] = useState({});
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     // set mounted to true
@@ -96,13 +98,16 @@ function Signup() {
         setError(data.error);
       }
     } else {
-      enqueueSnackbar(data.message, { variant: "success" });
+      enqueueSnackbar(data.message, { variant: "success", autoHideDuration: 15000 });
 
       // reset form fields
       setEmail("");
       setUsername("");
       setPassword2("");
       setPassword("");
+
+      // redirect to login page
+      router.push("/login");
     }
   }
 

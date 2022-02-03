@@ -1,9 +1,9 @@
 import NextAuth from "next-auth";
-import Providers from "next-auth/providers";
-import { connectToDatabase } from "./../../../back_end/database";
-import { loginSchema } from "./../../../validation/schema/auth";
-import { isEmptyObject, getFormattedError } from "./../../../validation/helper";
-import { isPasswordMatch } from "./../../../back_end/helper/auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { connectToDatabase } from "../../../back_end/database";
+import { loginSchema } from "../../../validation/schema/auth";
+import { isEmptyObject, getFormattedError } from "../../../validation/helper";
+import { isPasswordMatch } from "../../../back_end/helper/auth";
 
 // next auth configuration
 export default NextAuth({
@@ -11,20 +11,28 @@ export default NextAuth({
     jwt: true,
   },
   providers: [
-    Providers.Credentials({
-      async authorize(body) {
+    CredentialsProvider({
+      async authorize(credentials) {
+        // get form data
+        const body = {
+          email: credentials.email,
+          password: credentials.password,
+        };
+
         // check form validation
-        const { error } = loginSchema.validate(body, { abortEarly: false });
+        const { error } = loginSchema.validate(body, { abortEarly: true });
 
         // if form validation error
         if (!isEmptyObject(error)) {
-          return res.status(422).json({
+          const temp = {
             success: false,
             statusCode: 422,
             message: "form validation error",
             errorType: "ValidationError",
             error: getFormattedError(error),
-          });
+          };
+
+          throw new Error(JSON.stringify(temp));
         }
 
         // get database connection
@@ -33,14 +41,17 @@ export default NextAuth({
         // get database instance
         const db = client.db();
 
-        const user = db.collection("users").findOne({ email: body.email });
+        const user = await db
+          .collection("users")
+          .findOne({ email: body.email });
+        console.log(user);
 
         // if user dont exists
         if (!user) {
           // close database connection
           client.close();
 
-          throw new Error({
+          const temp = {
             success: false,
             statusCode: 422,
             message: "form validation error",
@@ -48,7 +59,9 @@ export default NextAuth({
             error: {
               email: "User don't exists.",
             },
-          });
+          };
+
+          throw new Error(JSON.stringify(temp));
         }
 
         // if password don't match
@@ -56,7 +69,7 @@ export default NextAuth({
           // close database connection
           client.close();
 
-          throw new Error({
+          const temp = {
             success: false,
             statusCode: 422,
             message: "form validation error",
@@ -64,7 +77,9 @@ export default NextAuth({
             error: {
               password: "Password dont match in database.",
             },
-          });
+          };
+
+          throw new Error(JSON.stringify(temp));
         }
 
         // close database connection
