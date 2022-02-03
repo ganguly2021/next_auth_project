@@ -30,7 +30,7 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [isMounted, setMounted] = useState(false);
-  const [error, setError] = useState({});
+  const [formError, setFormError] = useState({});
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -84,21 +84,24 @@ function Signup() {
 
     if (!isEmptyObject(error)) {
       // set errors
-      setError(getFormattedError(error));
+      setFormError(getFormattedError(error));
       return;
     }
     // clean errors
-    setError({});
+    setFormError({});
 
     // send api call
     const data = await createUser(formData);
 
     if (!data.success) {
       if (data.errorType === "ValidationError") {
-        setError(data.error);
+        setFormError(data.error);
       }
     } else {
-      enqueueSnackbar(data.message, { variant: "success", autoHideDuration: 15000 });
+      enqueueSnackbar(data.message, {
+        variant: "success",
+        autoHideDuration: 1500,
+      });
 
       // reset form fields
       setEmail("");
@@ -118,7 +121,7 @@ function Signup() {
       password={password}
       handleChange={handleChange}
       handleSubmit={handleSubmit}
-      error={error}
+      error={formError}
     />
   );
 }
