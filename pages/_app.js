@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Script from "next/script";
 import "../styles/globals.css";
+import "./../styles/custom.css";
 
 import store from "./../front_end/redux/store";
 import { Provider } from "react-redux";
@@ -39,6 +40,8 @@ function MyApp({ Component, pageProps }) {
           referrerPolicy="no-referrer"
         />
       </Head>
+      {/* Loader */}
+      <div className="overlay"></div>
       <Provider store={store}>
         <SnackbarProvider
           anchorOrigin={{

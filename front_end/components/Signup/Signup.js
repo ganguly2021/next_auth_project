@@ -6,6 +6,7 @@ import { signupSchema } from "./../../../validation/schema/auth";
 import { getFormattedError, isEmptyObject } from "./../../../validation/helper";
 import SignupView from "./SignupView";
 import { useSnackbar } from "notistack";
+import Head from "next/head";
 
 // create new user api call
 async function createUser(formData) {
@@ -31,6 +32,7 @@ function Signup() {
   const [password2, setPassword2] = useState("");
   const [isMounted, setMounted] = useState(false);
   const [formError, setFormError] = useState({});
+  const [isApiLoading, setApiLoading] = useState(false);
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -51,6 +53,14 @@ function Signup() {
     };
   }, []);
 
+  useEffect(() => {
+    if (isApiLoading) {
+      document.body.classList.add("loading");
+    } else {
+      document.body.classList.remove("loading");
+    }
+  }, [isApiLoading]);
+
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -69,6 +79,9 @@ function Signup() {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    // set loading state
+    setApiLoading(true);
+
     // create form data object
     const formData = {
       username: username,
@@ -85,6 +98,10 @@ function Signup() {
     if (!isEmptyObject(error)) {
       // set errors
       setFormError(getFormattedError(error));
+
+      // stop loading state
+      setApiLoading(false);
+
       return;
     }
     // clean errors
@@ -97,7 +114,13 @@ function Signup() {
       if (data.errorType === "ValidationError") {
         setFormError(data.error);
       }
+
+      // stop loading state
+      setApiLoading(false);
     } else {
+      // stop loading state
+      setApiLoading(false);
+
       enqueueSnackbar(data.message, {
         variant: "success",
         autoHideDuration: 1500,
@@ -115,14 +138,20 @@ function Signup() {
   }
 
   return (
-    <SignupView
-      username={username}
-      email={email}
-      password={password}
-      handleChange={handleChange}
-      handleSubmit={handleSubmit}
-      error={formError}
-    />
+    <>
+      <Head>
+        <title>NextJS | Register </title>
+      </Head>
+      <SignupView
+        username={username}
+        email={email}
+        password={password}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        error={formError}
+        isApiLoading={isApiLoading}
+      />
+    </>
   );
 }
 

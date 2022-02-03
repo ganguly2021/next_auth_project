@@ -6,6 +6,7 @@ import { hideNavbar, showNavbar } from "./../../redux/reducers/visible";
 import { loginSchema } from "./../../../validation/schema/auth";
 import { getFormattedError, isEmptyObject } from "./../../../validation/helper";
 import { useSnackbar } from "notistack";
+import Head from "next/head";
 
 import LoginView from "./LoginView";
 
@@ -15,6 +16,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [isMounted, setMounted] = useState(false);
   const [formError, setFormError] = useState({});
+  const [isApiLoading, setApiLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -36,6 +38,14 @@ function Login() {
     };
   }, []);
 
+  useEffect(() => {
+    if (isApiLoading) {
+      document.body.classList.add("loading");
+    } else {
+      document.body.classList.remove("loading");
+    }
+  }, [isApiLoading]);
+
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -49,6 +59,9 @@ function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    // set loading state
+    setApiLoading(true);
 
     // create form data object
     const formData = {
@@ -64,6 +77,10 @@ function Login() {
     if (!isEmptyObject(error)) {
       // set errors
       setFormError(getFormattedError(error));
+
+      // stop loading state
+      setApiLoading(false);
+
       return;
     }
 
@@ -84,27 +101,42 @@ function Login() {
 
       // set error
       setFormError({ ...err });
+
+      // stop loading state
+      setApiLoading(false);
+
       return;
     }
 
     // clean errors
     setFormError({});
 
+    // stop loading state
+    setApiLoading(false);
+
     // show login success message
-    enqueueSnackbar("User loggedin.", { variant: "success", autoHideDuration: 1500 });
+    enqueueSnackbar("User loggedin.", {
+      variant: "success",
+      autoHideDuration: 1500,
+    });
 
     // redirect to dashboard
     router.push("/dashboard");
   }
 
   return (
-    <LoginView
-      email={email}
-      password={password}
-      handleChange={handleChange}
-      handleSubmit={handleSubmit}
-      error={formError}
-    />
+    <>
+      <Head>
+        <title>NextJS | Login </title>
+      </Head>
+      <LoginView
+        email={email}
+        password={password}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        error={formError}
+      />
+    </>
   );
 }
 

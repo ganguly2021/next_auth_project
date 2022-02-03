@@ -1,9 +1,18 @@
 import React from "react";
 import TextFieldInput from "../common/TextFieldInput";
+import Link from "next/link";
 
 function SignupView(props) {
-  const { username, email, password, password2, handleChange, handleSubmit, error } =
-    props;
+  const {
+    username,
+    email,
+    password,
+    password2,
+    handleChange,
+    handleSubmit,
+    error,
+  } = props;
+
   return (
     <div className="container-fluid">
       <div className="container my-5">
@@ -11,7 +20,7 @@ function SignupView(props) {
           <div className="card-body">
             <h5 className="card-title fw-bold mb-3">Sign up for free</h5>
             <form onSubmit={handleSubmit} autoComplete="off" noValidate>
-            <TextFieldInput
+              <TextFieldInput
                 type="text"
                 id="username"
                 name="username"
@@ -62,7 +71,10 @@ function SignupView(props) {
                 Sign up
               </button>
               <small className="text-muted">
-                By clicking Sign up, you agree to the terms of use.
+                Already have an account ?{" "}
+                <Link href="/login">
+                  <a className="text-danger">Login here.</a>
+                </Link>
               </small>
             </form>
           </div>
