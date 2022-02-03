@@ -14,9 +14,6 @@ async function handler(req, res) {
 
     // if form data has error
     if (!isEmptyObject(error)) {
-      // close database connection
-      db.close();
-
       return res.status(422).json({
         success: false,
         statusCode: 422,
@@ -39,7 +36,7 @@ async function handler(req, res) {
 
     if (alreadyExists) {
       // close database connection
-      db.close();
+      client.close();
 
       return res.status(422).json({
         success: false,
@@ -66,7 +63,7 @@ async function handler(req, res) {
 
     if (user) {
       // close database connection
-      db.close();
+      client.close();
 
       return res.status(200).json({
         success: true,
@@ -76,7 +73,7 @@ async function handler(req, res) {
       });
     } else {
       // close database connection
-      db.close();
+      client.close();
 
       return res.status(500).json({
         success: false,

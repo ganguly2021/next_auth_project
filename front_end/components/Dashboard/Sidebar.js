@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import classnames from "classnames";
 import "react-toastify/dist/ReactToastify.css";
-import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { stopSidebarAnimate } from "./../../redux/reducers/visible";
 
@@ -22,15 +21,7 @@ function Sidebar() {
 
   // handle user signout
   const handleSignout = () => {
-    toast.warn("Add signout functionality.", {
-      position: "top-right",
-      autoClose: 2500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+    console.log("Signout user.");
   };
 
   return (

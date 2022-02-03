@@ -4,8 +4,26 @@ import { hideNavbar, showNavbar } from "./../../redux/reducers/visible";
 import { signupSchema } from "./../../../validation/schema/auth";
 import { getFormattedError, isEmptyObject } from "./../../../validation/helper";
 import SignupView from "./SignupView";
+import { useSnackbar } from "notistack";
+
+// create new user api call
+async function createUser(formData) {
+  const response = await fetch("/api/auth/signup", {
+    method: "POST",
+    body: JSON.stringify(formData),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  // change response into json
+  const data = await response.json();
+
+  return data;
+}
 
 function Signup() {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -46,7 +64,7 @@ function Signup() {
     }
   };
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     // create form data object
@@ -70,10 +88,23 @@ function Signup() {
     // clean errors
     setError({});
 
-    console.log("email: " + email);
-    console.log("password: " + password);
-    console.log("password2: " + password2);
-  };
+    // send api call
+    const data = await createUser(formData);
+
+    if (!data.success) {
+      if (data.errorType === "ValidationError") {
+        setError(data.error);
+      }
+    } else {
+      enqueueSnackbar(data.message, { variant: "success" });
+
+      // reset form fields
+      setEmail("");
+      setUsername("");
+      setPassword2("");
+      setPassword("");
+    }
+  }
 
   return (
     <SignupView
