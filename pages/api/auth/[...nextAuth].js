@@ -44,7 +44,6 @@ export default NextAuth({
         const user = await db
           .collection("users")
           .findOne({ email: body.email });
-        console.log(user);
 
         // if user dont exists
         if (!user) {

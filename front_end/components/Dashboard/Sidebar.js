@@ -36,7 +36,13 @@ function Sidebar() {
     >
       <Link href="/dashboard">
         <a className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-          <i className="fas fa-user-shield fa-2x text-warning"></i>
+          <img
+            src="/images/donkey_user.jpg"
+            alt=""
+            className="rounded-circle me-2"
+            width={50}
+            height={50}
+          />
           <span className="fs-4 ms-3">Sandeep</span>
         </a>
       </Link>
