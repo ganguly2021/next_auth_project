@@ -21,7 +21,7 @@ function Home() {
     image = (
       <img
         src="/images/auth_image.jpg"
-        className="shadow rounded animate__animated animate__fadeInRight"
+        className="shadow img-thumbnail rounded animate__animated animate__fadeInRight"
       />
     );
   } else {
@@ -34,7 +34,7 @@ function Home() {
     image = (
       <img
         src="/images/side_image.jpg"
-        className="shadow rounded animate__animated animate__fadeInRight"
+        className="shadow img-thumbnail rounded animate__animated animate__fadeInRight"
       />
     );
   }
