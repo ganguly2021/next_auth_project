@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import {
   hideNavbar,
   hideFooter,
@@ -13,16 +11,8 @@ import DashboardView from "./DashboardView";
 
 function Dashboard({ children }) {
   const [isMounted, setMounted] = useState(false);
-  const { data: session, status } = useSession();
 
   const dispatch = useDispatch();
-  const router = useRouter();
-
-  // if user not logged in
-  if (status === "unauthenticated" && status !== "loading") {
-    // redirect user to login page
-    router.push("/login");
-  }
 
   useEffect(() => {
     // set mounted to true
@@ -45,9 +35,7 @@ function Dashboard({ children }) {
     };
   }, []);
 
-  return status === "authenticated" ? (
-    <DashboardView rightContent={children} />
-  ) : null;
+  return <DashboardView rightContent={children} />;
 }
 
 export default Dashboard;
