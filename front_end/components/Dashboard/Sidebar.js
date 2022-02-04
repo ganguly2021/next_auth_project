@@ -3,9 +3,13 @@ import Link from "next/link";
 import classnames from "classnames";
 import { useSelector, useDispatch } from "react-redux";
 import { stopSidebarAnimate } from "./../../redux/reducers/visible";
+import { useSession, signOut } from "next-auth/react";
+import { useSnackbar } from "notistack";
 
 function Sidebar() {
   const [hoverLink, setHoverLink] = useState(0);
+  const { data: session, status } = useSession();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const visible = useSelector((state) => state.visible);
   const dispatch = useDispatch();
@@ -20,8 +24,21 @@ function Sidebar() {
 
   // handle user signout
   const handleSignout = () => {
-    console.log("Signout user.");
+    // show notistack message
+    enqueueSnackbar("User logged out.", {
+      variant: "success",
+      autoHideDuration: 1500,
+    });
+
+    // sign out user using nextjs-auth
+    signOut();
   };
+
+  let username = "";
+
+  if (status === "authenticated" && status !== "loading") {
+    username = session.user.email.split("@")[0];
+  }
 
   return (
     <div
@@ -43,7 +60,7 @@ function Sidebar() {
             width={50}
             height={50}
           />
-          <span className="fs-4 ms-3">Sandeep</span>
+          <span className="fs-4 ms-3 text-capitalize">{username}</span>
         </a>
       </Link>
       <hr />
@@ -109,31 +126,16 @@ function Sidebar() {
             width={32}
             height={32}
           />
-          <strong>Donkey</strong>
+          <strong className="text-capitalize">{username}</strong>
         </a>
         <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
-          <li>
-            <a className="dropdown-item" href="#">
-              New project...
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Settings
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Profile
-            </a>
-          </li>
           <li>
             <hr className="dropdown-divider" />
           </li>
           <li>
-            <a className="dropdown-item" href="#">
+            <button className="dropdown-item" onClick={handleSignout}>
               Sign out
-            </a>
+            </button>
           </li>
         </ul>
       </div>

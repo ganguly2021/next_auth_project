@@ -128,7 +128,7 @@ function Login() {
 
   // if user already authenticated
   // then redirect to dashboard
-  if ( status === 'authenticated' ){
+  if (status === "authenticated" && status !== "loading") {
     // redirect to dashboard
     router.push("/dashboard");
   }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 function Navbar() {
   const [hoverLink, setHoverLink] = useState(0);
@@ -17,6 +17,12 @@ function Navbar() {
       setHoverLogo(false);
     };
   }, []);
+
+  // handle sign out user
+  const handleSigout = (e) => {
+    // signout user using nextjs-auth
+    signOut();
+  };
 
   let navLinks = null;
 
@@ -118,6 +124,23 @@ function Navbar() {
               Dashboard
             </a>
           </Link>
+        </li>
+        <li className="nav-item">
+          <button
+            className={classNames("nav-link", {
+              active: hoverLink === 3,
+              "fw-bold": hoverLink === 3,
+            })}
+            onMouseOver={() => {
+              setHoverLink(3);
+            }}
+            onMouseOut={() => {
+              setHoverLink(0);
+            }}
+            onClick={handleSigout}
+          >
+            Sign Out
+          </button>
         </li>
       </>
     );
