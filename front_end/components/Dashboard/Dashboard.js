@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useSnackbar } from "notistack";
 import {
   hideNavbar,
   hideFooter,
@@ -15,8 +14,6 @@ import DashboardView from "./DashboardView";
 function Dashboard({ children }) {
   const [isMounted, setMounted] = useState(false);
   const { data: session, status } = useSession();
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const [popUp, setPopUp] = useState(false);
 
   const dispatch = useDispatch();
   const router = useRouter();
