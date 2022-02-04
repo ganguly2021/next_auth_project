@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
+import { useSession } from "next-auth/react";
 
 function Navbar() {
   const [hoverLink, setHoverLink] = useState(0);
   const [hoverLogo, setHoverLogo] = useState(false);
   const visible = useSelector((state) => state.visible);
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     // cleanup
@@ -15,6 +17,111 @@ function Navbar() {
       setHoverLogo(false);
     };
   }, []);
+
+  let navLinks = null;
+
+  // if user is not logged in
+  if (status !== "authenticated") {
+    navLinks = (
+      <>
+        <li className="nav-item">
+          <Link href="/">
+            <a
+              className={classNames("nav-link", {
+                active: hoverLink === 1,
+                "fw-bold": hoverLink === 1,
+              })}
+              onMouseOver={() => {
+                setHoverLink(1);
+              }}
+              onMouseOut={() => {
+                setHoverLink(0);
+              }}
+            >
+              Home
+            </a>
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link href="/login">
+            <a
+              className={classNames("nav-link", {
+                active: hoverLink === 2,
+                "fw-bold": hoverLink === 2,
+              })}
+              onMouseOver={() => {
+                setHoverLink(2);
+              }}
+              onMouseOut={() => {
+                setHoverLink(0);
+              }}
+            >
+              Login
+            </a>
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link href="/signup">
+            <a
+              className={classNames("nav-link", {
+                active: hoverLink === 3,
+                "fw-bold": hoverLink === 3,
+              })}
+              onMouseOver={() => {
+                setHoverLink(3);
+              }}
+              onMouseOut={() => {
+                setHoverLink(0);
+              }}
+            >
+              Signup
+            </a>
+          </Link>
+        </li>
+      </>
+    );
+  } else {
+    navLinks = (
+      <>
+        <li className="nav-item">
+          <Link href="/">
+            <a
+              className={classNames("nav-link", {
+                active: hoverLink === 1,
+                "fw-bold": hoverLink === 1,
+              })}
+              onMouseOver={() => {
+                setHoverLink(1);
+              }}
+              onMouseOut={() => {
+                setHoverLink(0);
+              }}
+            >
+              Home
+            </a>
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link href="/dashboard">
+            <a
+              className={classNames("nav-link", {
+                active: hoverLink === 2,
+                "fw-bold": hoverLink === 2,
+              })}
+              onMouseOver={() => {
+                setHoverLink(2);
+              }}
+              onMouseOut={() => {
+                setHoverLink(0);
+              }}
+            >
+              Dashboard
+            </a>
+          </Link>
+        </li>
+      </>
+    );
+  }
 
   return (
     <div
@@ -37,63 +144,7 @@ function Navbar() {
               />
             </a>
           </Link>
-
-          <ul className="nav nav-pills">
-            <li className="nav-item">
-              <Link href="/">
-                <a
-                  className={classNames("nav-link", {
-                    active: hoverLink === 1,
-                    "fw-bold": hoverLink === 1,
-                  })}
-                  onMouseOver={() => {
-                    setHoverLink(1);
-                  }}
-                  onMouseOut={() => {
-                    setHoverLink(0);
-                  }}
-                >
-                  Home
-                </a>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link href="/login">
-                <a
-                  className={classNames("nav-link", {
-                    active: hoverLink === 2,
-                    "fw-bold": hoverLink === 2,
-                  })}
-                  onMouseOver={() => {
-                    setHoverLink(2);
-                  }}
-                  onMouseOut={() => {
-                    setHoverLink(0);
-                  }}
-                >
-                  Login
-                </a>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link href="/signup">
-                <a
-                  className={classNames("nav-link", {
-                    active: hoverLink === 3,
-                    "fw-bold": hoverLink === 3,
-                  })}
-                  onMouseOver={() => {
-                    setHoverLink(3);
-                  }}
-                  onMouseOut={() => {
-                    setHoverLink(0);
-                  }}
-                >
-                  Signup
-                </a>
-              </Link>
-            </li>
-          </ul>
+          <ul className="nav nav-pills">{navLinks}</ul>
         </header>
       </div>
     </div>

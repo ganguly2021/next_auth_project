@@ -7,6 +7,7 @@ import { getFormattedError, isEmptyObject } from "./../../../validation/helper";
 import SignupView from "./SignupView";
 import { useSnackbar } from "notistack";
 import Head from "next/head";
+import { useSession } from "next-auth/react";
 
 // create new user api call
 async function createUser(formData) {
@@ -33,6 +34,7 @@ function Signup() {
   const [isMounted, setMounted] = useState(false);
   const [formError, setFormError] = useState({});
   const [isApiLoading, setApiLoading] = useState(false);
+  const { data: session, status } = useSession();
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -135,6 +137,13 @@ function Signup() {
       // redirect to login page
       router.push("/login");
     }
+  }
+
+  // if user already authenticated
+  // then redirect to dashboard
+  if (status === "authenticated") {
+    // redirect to dashboard
+    router.push("/dashboard");
   }
 
   return (

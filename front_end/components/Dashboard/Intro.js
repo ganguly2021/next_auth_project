@@ -8,8 +8,8 @@ function Intro() {
           <div className="card-body text-center">
             <h3 className="card-title">Welcome to your dashboard.</h3>
             <img
-              src="/images/side_image.jpg"
-              className="shadow w-75 rounded"
+              src="/images/dash_image.jpg"
+              className="shadow rounded img-fluid img-thumbnail"
             />
             <p className="card-text mt-5 fw-bold">
               Thanks, for testing this amazing nextjs app.

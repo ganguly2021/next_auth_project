@@ -7,6 +7,7 @@ import { loginSchema } from "./../../../validation/schema/auth";
 import { getFormattedError, isEmptyObject } from "./../../../validation/helper";
 import { useSnackbar } from "notistack";
 import Head from "next/head";
+import { useSession } from "next-auth/react";
 
 import LoginView from "./LoginView";
 
@@ -17,6 +18,7 @@ function Login() {
   const [isMounted, setMounted] = useState(false);
   const [formError, setFormError] = useState({});
   const [isApiLoading, setApiLoading] = useState(false);
+  const { data: session, status } = useSession();
 
   const dispatch = useDispatch();
 
@@ -120,6 +122,13 @@ function Login() {
       autoHideDuration: 1500,
     });
 
+    // redirect to dashboard
+    router.push("/dashboard");
+  }
+
+  // if user already authenticated
+  // then redirect to dashboard
+  if ( status === 'authenticated' ){
     // redirect to dashboard
     router.push("/dashboard");
   }

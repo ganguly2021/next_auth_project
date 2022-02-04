@@ -6,11 +6,12 @@ import "./../styles/custom.css";
 import store from "./../front_end/redux/store";
 import { Provider } from "react-redux";
 import { SnackbarProvider } from "notistack";
+import { SessionProvider } from "next-auth/react";
 
 import Footer from "./../front_end/components/Layout/Footer";
 import Navbar from "./../front_end/components/Layout/Navbar";
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <>
       <Head>
@@ -43,17 +44,19 @@ function MyApp({ Component, pageProps }) {
       {/* Loader */}
       <div className="overlay"></div>
       <Provider store={store}>
-        <SnackbarProvider
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          maxSnack={3}
-        >
-          <Navbar />
-          <Component {...pageProps} />
-          <Footer />
-        </SnackbarProvider>
+        <SessionProvider session={session}>
+          <SnackbarProvider
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            maxSnack={3}
+          >
+            <Navbar />
+            <Component {...pageProps} />
+            <Footer />
+          </SnackbarProvider>
+        </SessionProvider>
       </Provider>
       <footer>
         {/* jQuery 3 CDN */}
