@@ -13,7 +13,7 @@ function Intro() {
   return (
     <div className="container-fluid">
       <div className="container my-5">
-        <div className="card w-50 mx-auto shadow p-2 animate__animated animate__fadeInRight">
+        <div className="card w-50 mx-auto shadow p-2">
           <div className="card-body text-center">
             <h3 className="card-title">
               Welcome {<span className="text-capitalize">{username}</span>}, to

@@ -66,7 +66,7 @@ function Sidebar() {
       <hr />
       <ul className="nav nav-pills flex-column mb-auto">
         <li className="nav-item">
-          <Link href="/">
+          <Link href="/dashboard">
             <a
               className={classnames("nav-link text-white", {
                 active: hoverLink === 1,
@@ -76,12 +76,12 @@ function Sidebar() {
               onMouseOver={() => setHoverLink(1)}
             >
               <i className="fas fa-home fa-1x"></i>
-              <span className="fs-6 ms-3">Home</span>
+              <span className="fs-6 ms-3">Intro</span>
             </a>
           </Link>
         </li>
-        <li>
-          <Link href="/profile/edit">
+        <li className="nav-item">
+          <Link href="/">
             <a
               className={classnames("nav-link text-white", {
                 active: hoverLink === 2,
@@ -89,6 +89,21 @@ function Sidebar() {
               })}
               onMouseOut={() => setHoverLink(0)}
               onMouseOver={() => setHoverLink(2)}
+            >
+              <i className="fas fa-home fa-1x"></i>
+              <span className="fs-6 ms-3">Home</span>
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/edit">
+            <a
+              className={classnames("nav-link text-white", {
+                active: hoverLink === 3,
+                "fw-bold": hoverLink === 3,
+              })}
+              onMouseOut={() => setHoverLink(0)}
+              onMouseOver={() => setHoverLink(3)}
             >
               <i className="fas fa-user-edit fa-1x"></i>
               <span className="fs-6 ms-3">Edit Profile</span>
@@ -98,11 +113,11 @@ function Sidebar() {
         <li>
           <button
             className={classnames("btn text-start w-100 nav-link text-white", {
-              active: hoverLink === 3,
-              "fw-bold": hoverLink === 3,
+              active: hoverLink === 4,
+              "fw-bold": hoverLink === 4,
             })}
             onMouseOut={() => setHoverLink(0)}
-            onMouseOver={() => setHoverLink(3)}
+            onMouseOver={() => setHoverLink(4)}
             onClick={handleSignout}
           >
             <i className="fas fa-sign-out-alt fa-1x"></i>

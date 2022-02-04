@@ -30,13 +30,13 @@ function TextFieldInput(props) {
         value={value}
         style={style}
       />
-      {lblText && <label htmlFor={id}>{lblText}</label>}
+      {lblText && <label className="text-start" htmlFor={id}>{lblText}</label>}
       {infoText && (
-        <div id={`${id}Help`} className="form-text">
+        <div id={`${id}Help`} className="form-text text-start">
           {infoText}
         </div>
       )}
-      {error && <div className="invalid-feedback">{error}</div>}
+      {error && <div className="invalid-feedback text-start">{error}</div>}
     </div>
   );
 }

@@ -47,3 +47,25 @@ export const loginSchema = joi.object({
     "any.required": "Password cannot be empty.",
   }),
 });
+
+// edit profile form validation schema
+export const editProfileSchema = joi.object({
+  password: joi.string().trim().required().messages({
+    "string.empty": "New password cannot be empty.",
+    "any.required": "New password cannot be empty.",
+  }),
+  password2: joi
+    .string()
+    .trim()
+    .required()
+    .valid(joi.ref("password"))
+    .messages({
+      "string.empty": "Re-type new password cannot be empty.",
+      "any.required": "Re-type new password cannot be empty.",
+      "any.only": "Re-type new password must match above password.",
+    }),
+  oldPassword: joi.string().trim().required().messages({
+    "string.empty": "Old password cannot be empty.",
+    "any.required": "Old password cannot be empty.",
+  }),
+});
