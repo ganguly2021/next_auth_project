@@ -35,6 +35,18 @@ function EditProfileView(props) {
                 onMouseOver={() => setImageHover(true)}
                 onMouseOut={() => setImageHover(false)}
               />
+
+              <TextFieldInput
+                type="password"
+                id="oldPassword"
+                name="oldPassword"
+                placeholder="******"
+                lblText="Current Password"
+                onChange={handleChange}
+                value={oldPassword}
+                error={error.oldPassword}
+              />
+
               <TextFieldInput
                 type="password"
                 id="password"
@@ -55,16 +67,6 @@ function EditProfileView(props) {
                 onChange={handleChange}
                 value={password2}
                 error={error.password2}
-              />
-              <TextFieldInput
-                type="password"
-                id="oldPassword"
-                name="oldPassword"
-                placeholder="******"
-                lblText="Enter your current password"
-                onChange={handleChange}
-                value={oldPassword}
-                error={error.oldPassword}
               />
 
               <button

@@ -65,7 +65,7 @@ export const editProfileSchema = joi.object({
       "any.only": "Re-type new password must match above password.",
     }),
   oldPassword: joi.string().trim().required().messages({
-    "string.empty": "Old password cannot be empty.",
-    "any.required": "Old password cannot be empty.",
+    "string.empty": "Current password cannot be empty.",
+    "any.required": "Current password cannot be empty.",
   }),
 });
