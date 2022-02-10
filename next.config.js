@@ -1,7 +1,20 @@
-module.exports = {
-  reactStrictMode: true,
-  env: {
-    db_url: "mongodb://127.0.0.1:27017/nextjs_auth",
-    secret: "CLomrqRmeYWmxhzE5AamtnfGOx2KSuBZtRio83ZDQ5E=",
-  },
+const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
+
+module.exports = (phase) => {
+  if (phase === PHASE_DEVELOPMENT_SERVER) {
+    return {
+      reactStrictMode: true,
+      env: {
+        mongodb_username: "",
+        mongodb_password: "",
+        mongodb_clustername: "",
+        mongodb_database: "nextjs_auth",
+        secret: "CLomrqRmeYWmxhzE5AamtnfGOx2KSuBZtRio83ZDQ5E=",
+      },
+    };
+  }
+
+  return {
+    reactStrictMode: true,
+  };
 };
