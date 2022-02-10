@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import classnames from "classnames";
 import TextFieldInput from "../common/TextFieldInput";
+import useWindowDimesion from "../../hooks/useWindowDimensions";
 
 function EditProfileView(props) {
   const {
@@ -13,11 +14,17 @@ function EditProfileView(props) {
   } = props;
 
   const [isImageHover, setImageHover] = useState(false);
+  const { width } = useWindowDimesion();
 
   return (
     <div className="container-fluid">
       <div className="container my-5">
-        <div className="card w-50 p-5 mx-auto shadow rounded">
+        <div
+          className={classnames("card mx-auto shadow rounded", {
+            "w-50 p-5": width >= 768,
+            "p-2": !(width >= 768),
+          })}
+        >
           <div className="card-body">
             <form
               onSubmit={handleSubmit}

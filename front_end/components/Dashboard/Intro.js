@@ -1,8 +1,11 @@
 import React from "react";
 import { useSession } from "next-auth/react";
+import classnames from "classnames";
+import useWindowDimesion from "../../hooks/useWindowDimensions";
 
 function Intro() {
   const { data: session, status } = useSession();
+  const { width } = useWindowDimesion();
 
   let username = "";
 
@@ -13,7 +16,11 @@ function Intro() {
   return (
     <div className="container-fluid">
       <div className="container my-5">
-        <div className="card w-50 mx-auto shadow p-2">
+        <div
+          className={classnames("card mx-auto shadow p-2", {
+            "w-50": width >= 768,
+          })}
+        >
           <div className="card-body text-center">
             <h3 className="card-title">
               Welcome {<span className="text-capitalize">{username}</span>}, to

@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import classnames from "classnames";
 import TextFieldInput from "../common/TextFieldInput";
 import Link from "next/link";
+import useWindowDimesion from "../../hooks/useWindowDimensions";
 
 function SignupView(props) {
   const {
@@ -13,10 +15,20 @@ function SignupView(props) {
     error,
   } = props;
 
+  const { width } = useWindowDimesion();
+
   return (
     <div className="container-fluid">
       <div className="container my-5">
-        <div className="card animate__animated animate__fadeInRight w-50 p-5 mx-auto shadow rounded">
+        <div
+          className={classnames(
+            "card animate__animated animate__fadeInRight mx-auto shadow rounded",
+            {
+              "w-50 p-5": width >= 768,
+              "p-2": !(width >= 768),
+            }
+          )}
+        >
           <div className="card-body">
             <h5 className="card-title fw-bold mb-3">Sign up for free</h5>
             <form onSubmit={handleSubmit} autoComplete="off" noValidate>

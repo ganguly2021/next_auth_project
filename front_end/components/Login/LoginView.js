@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import classnames from "classnames";
 import TextFieldInput from "./../common/TextFieldInput";
+import useWindowDimesion from "../../hooks/useWindowDimensions";
 
 function LoginView(props) {
   const { email, password, handleChange, handleSubmit, error } = props;
+  const { width } = useWindowDimesion();
 
   return (
     <div className="container-fluid">
       <div className="container my-5">
-        <div className="card animate__animated animate__fadeInLeft w-50 p-5 mx-auto shadow rounded">
+        <div
+          className={classnames(
+            "card animate__animated animate__fadeInLeft mx-auto shadow rounded",
+            {
+              "w-50 p-5": width >= 768,
+              "p-2": !(width >= 768),
+            }
+          )}
+        >
           <div className="card-body">
             <h5 className="card-title fw-bold mb-3">
               Already have an account ?
