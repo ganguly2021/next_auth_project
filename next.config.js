@@ -10,14 +10,11 @@ module.exports = (phase) => {
         mongodb_clustername: "",
         mongodb_database: "nextjs_auth",
         secret: "CLomrqRmeYWmxhzE5AamtnfGOx2KSuBZtRio83ZDQ5E=",
-        NEXTAUTH_URL:
-          "https://next-auth-project-47910rjp5-ganguly2021.vercel.app/",
       },
     };
   }
 
   return {
     reactStrictMode: true,
-    NEXTAUTH_URL: "https://next-auth-project-47910rjp5-ganguly2021.vercel.app/",
   };
 };
