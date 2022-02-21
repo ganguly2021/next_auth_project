@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Script from "next/script";
-import "../styles/globals.css";
-import "./../styles/custom.css";
+import Router from "next/router";
+import NProgress from "nprogress";
 
 import store from "./../front_end/redux/store";
 import { Provider } from "react-redux";
@@ -12,6 +12,17 @@ import Footer from "./../front_end/components/Layout/Footer";
 import Navbar from "./../front_end/components/Layout/Navbar";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+  // on page change loader
+  NProgress.configure({ showSpinner: false });
+
+  Router.events.on("routeChangeStart", () => {
+    NProgress.start();
+  });
+
+  Router.events.on("routeChangeComplete", () => {
+    NProgress.done();
+  });
+
   return (
     <>
       <Head>
