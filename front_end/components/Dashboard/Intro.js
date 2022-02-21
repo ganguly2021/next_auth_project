@@ -2,6 +2,7 @@ import React from "react";
 import { useSession } from "next-auth/react";
 import classnames from "classnames";
 import useWindowDimesion from "../../hooks/useWindowDimensions";
+import ResponsiveLink from "../Layout/ResponsiveLink";
 
 function Intro() {
   const { data: session, status } = useSession();
@@ -34,6 +35,7 @@ function Intro() {
               Thanks, {<span className="text-capitalize">{username}</span>} for
               testing this amazing nextjs app.
             </p>
+            {width <= 768 && <ResponsiveLink />}
           </div>
         </div>
       </div>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import classnames from "classnames";
 import TextFieldInput from "../common/TextFieldInput";
 import useWindowDimesion from "../../hooks/useWindowDimensions";
+import ResponsiveLink from "../Layout/ResponsiveLink";
 
 function EditProfileView(props) {
   const {
@@ -83,6 +84,7 @@ function EditProfileView(props) {
                 Update
               </button>
             </form>
+            {width <= 768 && <ResponsiveLink />}
           </div>
         </div>
       </div>
