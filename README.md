@@ -1,3 +1,11 @@
+![alt text](https://screens1017.s3.ap-south-1.amazonaws.com/next_auth/01.png)
+
+![alt text](https://screens1017.s3.ap-south-1.amazonaws.com/next_auth/02.png)
+
+![alt text](https://screens1017.s3.ap-south-1.amazonaws.com/next_auth/03.png)
+
+![alt text](https://screens1017.s3.ap-south-1.amazonaws.com/next_auth/04.png)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
